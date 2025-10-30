@@ -2,6 +2,9 @@
 <html lang="id">
 <head>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Portofolio Yerikho Ario H, siswa SMAN 62 Jakarta dengan minat di dunia komputer.">
@@ -19,6 +22,37 @@
       background-color: #0e0e0e;
       color: white;
       overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Animated Background Canvas */
+    #bgCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    /* Cursor Trail Effect */
+    .cursor-trail {
+      position: fixed;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(61,61,245,0.8), transparent);
+      pointer-events: none;
+      z-index: 9998;
+      animation: fadeOut 0.8s ease-out forwards;
+    }
+
+    @keyframes fadeOut {
+      to {
+        opacity: 0;
+        transform: scale(2);
+      }
     }
 
     /* Intro Screen */
@@ -36,11 +70,27 @@
       z-index: 1000;
       transition: opacity 1s ease, transform 1s ease;
     }
+    
     #intro h1 {
-      font-size: 3rem;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 4rem;
+      font-weight: 900;
       margin-bottom: 1rem;
-      animation: fadeIn 1.2s ease-in;
+      background: linear-gradient(45deg, #3d3df5, #5757fa, #7d7dff, #3d3df5);
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradientShift 3s ease infinite, fadeIn 1.2s ease-in;
+      text-shadow: 0 0 30px rgba(61,61,245,0.5);
+      letter-spacing: 3px;
     }
+
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    
     #intro button {
       padding: 0.8rem 1.5rem;
       font-size: 1.1rem;
@@ -50,10 +100,32 @@
       color: white;
       cursor: pointer;
       transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
     }
+
+    #intro button::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+
+    #intro button:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+
     #intro button:hover {
       background-color: #5757fa;
       transform: scale(1.05);
+      box-shadow: 0 0 30px rgba(61,61,245,0.6);
     }
 
     @keyframes fadeIn {
@@ -618,6 +690,8 @@
   </style>
 </head>
 <body>
+  <!-- Animated Background Canvas -->
+  <canvas id="bgCanvas"></canvas>
 
   <div id="intro">
     <h1>Welcome to Yerikho's Lounge</h1>
@@ -852,128 +926,6 @@
             <img src="priv3.jpg" alt="Memory 3">
             <div class="photo-caption">Moment 3</div>
           </div>
-		  
-		  
-          <!-- Photo Frame 4 -->
-          <div class="photo-frame" onclick="openLightbox(this)">
-            <img src="priv4.jpg" alt="Memory 4">
-            <div class="photo-caption">Moment 4</div>
-          </div>
-          
-          <!-- Photo Frame 5 -->
-          <div class="photo-frame" onclick="openLightbox(this)">
-            <img src="priv5.jpg" alt="Memory 5">
-            <div class="photo-caption">Moment 5</div>
-          </div>
-          
-          <!-- Photo Frame 6 -->
-          <div class="photo-frame" onclick="openLightbox(this)">
-            <img src="priv6.jpg" alt="Memory 3">
-            <div class="photo-caption">Moment 6</div>
-          </div>
-		  
-		  
-          <!-- Photo Frame 7 -->
-          <div class="photo-frame" onclick="openLightbox(this)">
-            <img src="priv7.jpg" alt="Memory 1">
-            <div class="photo-caption">Moment 7</div>
-          </div>
-          
-          <!-- Photo Frame 8 -->
-          <div class="photo-frame" onclick="openLightbox(this)">
-            <img src="priv8.jpg" alt="Memory 2">
-            <div class="photo-caption">Moment 8</div>
-          </div>
-          
-          <!-- Photo Frame 9 -->
-          <div class="photo-frame" onclick="openLightbox(this)">
-            <img src="priv9.jpg" alt="Memory 3">
-            <div class="photo-caption">Moment 9</div>
-          </div>
-		  
-		  
-          <!-- Photo Frame 10 -->
-          <div class="photo-frame" onclick="openLightbox(this)">
-            <img src="priv10.jpg" alt="Memory 1">
-            <div class="photo-caption">Moment 10</div>
-          </div>
-          
-          <!-- Photo Frame 11 -->
-          <div class="photo-frame" onclick="openLightbox(this)">
-            <img src="priv11.jpg" alt="Memory 2">
-            <div class="photo-caption">Moment 11</div>
-          </div>
-          
-          <!-- Photo Frame 12 -->
-          <div class="photo-frame" onclick="openLightbox(this)">
-            <img src="priv12.jpg" alt="Memory 3">
-            <div class="photo-caption">Moment 12</div>
-          </div>
-		  
-		  
-          <!-- Photo Frame 13 -->
-          <div class="photo-frame" onclick="openLightbox(this)">
-            <img src="priv13.jpg" alt="Memory 1">
-            <div class="photo-caption">Moment 13</div>
-          </div>
-          
-          <!-- Photo Frame 14 -->
-          <div class="photo-frame" onclick="openLightbox(this)">
-            <img src="priv14.jpg" alt="Memory 2">
-            <div class="photo-caption">Moment 14</div>
-          </div>
-          
-          <!-- Photo Frame 15 -->
-          <div class="photo-frame" onclick="openLightbox(this)">
-            <img src="priv15.jpeg" alt="Memory 3">
-            <div class="photo-caption">Moment 15</div>
-          </div>
-		  
-		  
-          <!-- Photo Frame 16 -->
-          <div class="photo-frame" onclick="openLightbox(this)">
-            <img src="priv16.jpeg" alt="Memory 1">
-            <div class="photo-caption">Moment 16</div>
-          </div>
-          
-          <!-- Photo Frame 17 -->
-          <div class="photo-frame" onclick="openLightbox(this)">
-            <img src="priv17.jpeg" alt="Memory 2">
-            <div class="photo-caption">Moment 17</div>
-          </div>
-          
-          <!-- Photo Frame 18 -->
-          <div class="photo-frame" onclick="openLightbox(this)">
-            <img src="priv18.jpeg" alt="Memory 3">
-            <div class="photo-caption">Moment 18</div>
-          </div>
-		  
-		  
-          <!-- Photo Frame 19 -->
-          <div class="photo-frame" onclick="openLightbox(this)">
-            <img src="priv19.jpeg" alt="Memory 1">
-            <div class="photo-caption">Moment 19</div>
-          </div>
-          
-          <!-- Photo Frame 20 -->
-          <div class="photo-frame" onclick="openLightbox(this)">
-            <img src="priv20.jpeg" alt="Memory 2">
-            <div class="photo-caption">Moment 20</div>
-          </div>
-          
-          <!-- Photo Frame 21 -->
-          <div class="photo-frame" onclick="openLightbox(this)">
-            <img src="priv21.jpg" alt="Memory 3">
-            <div class="photo-caption">Moment 21</div>
-          </div>
-		  
-		 
-          <!-- Photo Frame 22 -->
-          <div class="photo-frame" onclick="openLightbox(this)">
-            <img src="priv22.jpg" alt="Memory 1">
-            <div class="photo-caption">Moment 22</div>
-          </div>
-         
 
           <!-- Tambahkan foto lebih banyak di sini! -->
           <!-- Copy paste struktur di atas, ganti src dan caption -->
@@ -1052,7 +1004,133 @@
   <button id="backToTop">Top</button>
 
   <script>
-    // Intro transition
+    // ===== Animated Background with Particles =====
+    const canvas = document.getElementById('bgCanvas');
+    const ctx = canvas.getContext('2d');
+    
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+
+    // Particle System
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 2 + 1;
+        this.speedX = Math.random() * 0.5 - 0.25;
+        this.speedY = Math.random() * 0.5 - 0.25;
+        this.opacity = Math.random() * 0.5 + 0.2;
+      }
+
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+
+        if (this.x > canvas.width) this.x = 0;
+        if (this.x < 0) this.x = canvas.width;
+        if (this.y > canvas.height) this.y = 0;
+        if (this.y < 0) this.y = canvas.height;
+      }
+
+      draw() {
+        ctx.fillStyle = `rgba(61, 61, 245, ${this.opacity})`;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    // Create particles
+    const particles = [];
+    for (let i = 0; i < 100; i++) {
+      particles.push(new Particle());
+    }
+
+    // Mouse tracking for connections
+    let mouse = { x: null, y: null };
+    
+    canvas.addEventListener('mousemove', (e) => {
+      mouse.x = e.x;
+      mouse.y = e.y;
+    });
+
+    // Animation loop
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Draw and update particles
+      particles.forEach(particle => {
+        particle.update();
+        particle.draw();
+
+        // Connect particles near mouse
+        if (mouse.x && mouse.y) {
+          const dx = mouse.x - particle.x;
+          const dy = mouse.y - particle.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+
+          if (distance < 150) {
+            ctx.strokeStyle = `rgba(61, 61, 245, ${0.3 - distance / 500})`;
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(particle.x, particle.y);
+            ctx.lineTo(mouse.x, mouse.y);
+            ctx.stroke();
+          }
+        }
+      });
+
+      // Connect nearby particles
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+
+          if (distance < 100) {
+            ctx.strokeStyle = `rgba(61, 61, 245, ${0.1 - distance / 1000})`;
+            ctx.lineWidth = 0.5;
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+
+    // ===== Cursor Trail Effect =====
+    let lastTrailTime = 0;
+    document.addEventListener('mousemove', (e) => {
+      const now = Date.now();
+      if (now - lastTrailTime > 30) { // Throttle trail creation
+        createTrail(e.pageX, e.pageY);
+        lastTrailTime = now;
+      }
+    });
+
+    function createTrail(x, y) {
+      const trail = document.createElement('div');
+      trail.className = 'cursor-trail';
+      trail.style.left = x - 10 + 'px';
+      trail.style.top = y - 10 + 'px';
+      document.body.appendChild(trail);
+
+      setTimeout(() => {
+        trail.remove();
+      }, 800);
+    }
+
+    // ===== Intro transition =====
     function startJourney() {
       const intro = document.getElementById('intro');
       intro.style.opacity = '0';
