@@ -487,6 +487,166 @@
       font-weight: 600;
     }
 
+    /* Music Frame Play Overlay */
+    .music-frame {
+      cursor: pointer;
+    }
+
+    .play-overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 60px;
+      height: 60px;
+      background: rgba(61,61,245,0.9);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      color: white;
+      opacity: 0;
+      transition: all 0.3s ease;
+      pointer-events: none;
+    }
+
+    .music-frame:hover .play-overlay {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1.1);
+    }
+
+    .music-frame.playing .play-overlay {
+      opacity: 1;
+      background: rgba(245,61,61,0.9);
+    }
+
+    .music-frame.playing .play-overlay i::before {
+      content: "\f04c"; /* pause icon */
+    }
+
+    /* Music Player Modal */
+    .music-player-modal {
+      display: none;
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: linear-gradient(135deg, rgba(30,30,30,0.98), rgba(20,20,20,0.98));
+      padding: 20px 25px;
+      border-radius: 15px;
+      border: 2px solid rgba(61,61,245,0.5);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+      z-index: 9999;
+      min-width: 300px;
+      backdrop-filter: blur(10px);
+      animation: slideUp 0.3s ease;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .music-player-modal.active {
+      display: block;
+    }
+
+    .music-player-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 15px;
+    }
+
+    .music-player-title {
+      color: #fff;
+      font-size: 1.1rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .music-player-title i {
+      color: #3d3df5;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .music-close-btn {
+      background: none;
+      border: none;
+      color: #aaa;
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .music-close-btn:hover {
+      color: #ff5555;
+      transform: rotate(90deg);
+    }
+
+    .music-controls {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-top: 15px;
+    }
+
+    .music-control-btn {
+      background: #3d3df5;
+      border: none;
+      color: white;
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .music-control-btn:hover {
+      background: #5757fa;
+      transform: scale(1.1);
+    }
+
+    .music-progress {
+      flex: 1;
+      height: 6px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 3px;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .music-progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #3d3df5, #5757fa);
+      width: 0%;
+      transition: width 0.1s linear;
+    }
+
+    .music-time {
+      color: #aaa;
+      font-size: 0.85rem;
+      min-width: 45px;
+      text-align: center;
+    }
+
     /* Navigation Arrows */
     .gallery-nav {
       position: absolute;
@@ -659,6 +819,11 @@
       color: white;
     }
 
+    .youtube {
+      background: #FF0000;
+      color: white;
+    }
+
     .contact-info {
       text-align: center;
     }
@@ -746,7 +911,7 @@
     <!-- Hobi 1: Dengar Lagu -->
     <div class="hobi-section">
       <h3><i class="fa-solid fa-music"></i> Dengar Lagu</h3>
-      <p class="hobi-desc">Playlist favorit yang menemani hari-hari saya</p>
+      <p class="hobi-desc">Lagu favorit yang menemani hari-hari saya</p>
       
       <div class="gallery-container">
         <button class="gallery-nav prev" onclick="scrollHobiSlider('music', -1)">
@@ -754,25 +919,40 @@
         </button>
         
         <div class="gallery-slider" id="musicSlider">
-          <div class="photo-frame" onclick="openLightbox(this)">
+          <div class="photo-frame music-frame" data-audio="lagu1.mp3" onclick="playMusic(this)">
             <img src="lagu1.jpg" alt="Lagu 1">
-            <div class="photo-caption">Lagu 1</div>
+            <div class="photo-caption">Your Love</div>
+            <div class="play-overlay">
+              <i class="fa-solid fa-play"></i>
+            </div>
           </div>
-          <div class="photo-frame" onclick="openLightbox(this)">
+          <div class="photo-frame music-frame" data-audio="lagu2.mp3" onclick="playMusic(this)">
             <img src="lagu2.jpg" alt="Lagu 2">
-            <div class="photo-caption">Lagu 2</div>
+            <div class="photo-caption">Stop Crying Your Heart Out</div>
+            <div class="play-overlay">
+              <i class="fa-solid fa-play"></i>
+            </div>
           </div>
-          <div class="photo-frame" onclick="openLightbox(this)">
+          <div class="photo-frame music-frame" data-audio="lagu3.mp3" onclick="playMusic(this)">
             <img src="lagu3.jpg" alt="Lagu 3">
-            <div class="photo-caption">Lagu 3</div>
+            <div class="photo-caption">If I Let You Go</div>
+            <div class="play-overlay">
+              <i class="fa-solid fa-play"></i>
+            </div>
           </div>
-          <div class="photo-frame" onclick="openLightbox(this)">
+          <div class="photo-frame music-frame" data-audio="lagu4.mp3" onclick="playMusic(this)">
             <img src="lagu4.jpg" alt="Lagu 4">
-            <div class="photo-caption">Lagu 4</div>
+            <div class="photo-caption">(Everything I Do) I Do It For You</div>
+            <div class="play-overlay">
+              <i class="fa-solid fa-play"></i>
+            </div>
           </div>
-          <div class="photo-frame" onclick="openLightbox(this)">
+          <div class="photo-frame music-frame" data-audio="lagu5.mp3" onclick="playMusic(this)">
             <img src="lagu5.jpg" alt="Lagu 5">
-            <div class="photo-caption">Lagu 5</div>
+            <div class="photo-caption">The Day You Went Away</div>
+            <div class="play-overlay">
+              <i class="fa-solid fa-play"></i>
+            </div>
           </div>
         </div>
         
@@ -926,7 +1106,128 @@
             <img src="priv3.jpg" alt="Memory 3">
             <div class="photo-caption">Moment 3</div>
           </div>
-
+		  
+		  <!-- Photo Frame 1 -->
+          <div class="photo-frame" onclick="openLightbox(this)">
+            <img src="priv4.jpg" alt="Memory 1">
+            <div class="photo-caption">Moment 4</div>
+          </div>
+          
+          <!-- Photo Frame 2 -->
+          <div class="photo-frame" onclick="openLightbox(this)">
+            <img src="priv5.jpg" alt="Memory 2">
+            <div class="photo-caption">Moment 5</div>
+          </div>
+          
+          <!-- Photo Frame 3 -->
+          <div class="photo-frame" onclick="openLightbox(this)">
+            <img src="priv6.jpg" alt="Memory 3">
+            <div class="photo-caption">Moment 6</div>
+          </div>
+		  
+		  <!-- Photo Frame 1 -->
+          <div class="photo-frame" onclick="openLightbox(this)">
+            <img src="priv7.jpg" alt="Memory 1">
+            <div class="photo-caption">Moment 7</div>
+          </div>
+          
+          <!-- Photo Frame 2 -->
+          <div class="photo-frame" onclick="openLightbox(this)">
+            <img src="priv8.jpg" alt="Memory 2">
+            <div class="photo-caption">Moment 8</div>
+          </div>
+          
+          <!-- Photo Frame 3 -->
+          <div class="photo-frame" onclick="openLightbox(this)">
+            <img src="priv9.jpg" alt="Memory 3">
+            <div class="photo-caption">Moment 9</div>
+          </div>
+		  
+		  <!-- Photo Frame 1 -->
+          <div class="photo-frame" onclick="openLightbox(this)">
+            <img src="priv10.jpg" alt="Memory 1">
+            <div class="photo-caption">Moment 10</div>
+          </div>
+          
+          <!-- Photo Frame 2 -->
+          <div class="photo-frame" onclick="openLightbox(this)">
+            <img src="priv11.jpg" alt="Memory 2">
+            <div class="photo-caption">Moment 11</div>
+          </div>
+          
+          <!-- Photo Frame 3 -->
+          <div class="photo-frame" onclick="openLightbox(this)">
+            <img src="priv12.jpg" alt="Memory 3">
+            <div class="photo-caption">Moment 12</div>
+          </div>
+		  
+		  <!-- Photo Frame 1 -->
+          <div class="photo-frame" onclick="openLightbox(this)">
+            <img src="priv13.jpg" alt="Memory 1">
+            <div class="photo-caption">Moment 13</div>
+          </div>
+          
+          <!-- Photo Frame 2 -->
+          <div class="photo-frame" onclick="openLightbox(this)">
+            <img src="priv14.jpg" alt="Memory 2">
+            <div class="photo-caption">Moment 14</div>
+          </div>
+          
+          <!-- Photo Frame 3 -->
+          <div class="photo-frame" onclick="openLightbox(this)">
+            <img src="priv15.jpeg" alt="Memory 3">
+            <div class="photo-caption">Moment 15</div>
+          </div>
+		  
+		  <!-- Photo Frame 1 -->
+          <div class="photo-frame" onclick="openLightbox(this)">
+            <img src="priv16.jpeg" alt="Memory 1">
+            <div class="photo-caption">Moment 16</div>
+          </div>
+          
+          <!-- Photo Frame 2 -->
+          <div class="photo-frame" onclick="openLightbox(this)">
+            <img src="priv17.jpeg" alt="Memory 2">
+            <div class="photo-caption">Moment 17</div>
+          </div>
+          
+          <!-- Photo Frame 3 -->
+          <div class="photo-frame" onclick="openLightbox(this)">
+            <img src="priv18.jpeg" alt="Memory 3">
+            <div class="photo-caption">Moment 18</div>
+          </div>
+		  
+		  <!-- Photo Frame 1 -->
+          <div class="photo-frame" onclick="openLightbox(this)">
+            <img src="priv19.jpeg" alt="Memory 1">
+            <div class="photo-caption">Moment 19</div>
+          </div>
+          
+          <!-- Photo Frame 2 -->
+          <div class="photo-frame" onclick="openLightbox(this)">
+            <img src="priv20.jpeg" alt="Memory 2">
+            <div class="photo-caption">Moment 20</div>
+          </div>
+          
+          <!-- Photo Frame 3 -->
+          <div class="photo-frame" onclick="openLightbox(this)">
+            <img src="priv21.jpg" alt="Memory 3">
+            <div class="photo-caption">Moment 21</div>
+          </div>
+		  
+		  <!-- Photo Frame 1 -->
+          <div class="photo-frame" onclick="openLightbox(this)">
+            <img src="priv22.jpg" alt="Memory 1">
+            <div class="photo-caption">Moment 22</div>
+          </div>
+		  
+		  <!-- Photo Frame 1 -->
+          <div class="photo-frame" onclick="openLightbox(this)">
+            <img src="priv23.jpg" alt="Memory 1">
+            <div class="photo-caption">Moment 23</div>
+          </div>
+          
+          
           <!-- Tambahkan foto lebih banyak di sini! -->
           <!-- Copy paste struktur di atas, ganti src dan caption -->
           
@@ -985,6 +1286,16 @@
         </div>
       </a>
 
+      <a href="https://www.youtube.com/@Blastergame41" target="_blank" class="contact-item">
+        <div class="contact-icon youtube">
+          <i class="fa-brands fa-youtube"></i>
+        </div>
+        <div class="contact-info">
+          <strong>YouTube</strong>
+          <p>@Blastergame41</p>
+        </div>
+      </a>
+
       <a href="https://github.com/yerikhoario" target="_blank" class="contact-item">
         <div class="contact-icon github">
           <i class="fa-brands fa-github"></i>
@@ -1002,6 +1313,29 @@
   </footer>
 
   <button id="backToTop">Top</button>
+
+  <!-- Music Player Modal -->
+  <div class="music-player-modal" id="musicPlayer">
+    <div class="music-player-header">
+      <div class="music-player-title">
+        <i class="fa-solid fa-music"></i>
+        <span id="currentSongTitle">Memutar Lagu</span>
+      </div>
+      <button class="music-close-btn" onclick="closeMusicPlayer()">
+        <i class="fa-solid fa-times"></i>
+      </button>
+    </div>
+    <div class="music-controls">
+      <button class="music-control-btn" id="playPauseBtn" onclick="togglePlayPause()">
+        <i class="fa-solid fa-pause"></i>
+      </button>
+      <div class="music-progress" onclick="seekMusic(event)">
+        <div class="music-progress-bar" id="progressBar"></div>
+      </div>
+      <span class="music-time" id="currentTime">0:00</span>
+    </div>
+    <audio id="audioPlayer"></audio>
+  </div>
 
   <script>
     // ===== Animated Background with Particles =====
@@ -1233,12 +1567,116 @@
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') {
         closeLightbox();
+        closeMusicPlayer();
       }
+    });
+
+    // ===== Music Player Functions =====
+    let currentAudio = null;
+    let currentMusicFrame = null;
+
+    function playMusic(element) {
+      const audioSrc = element.getAttribute('data-audio');
+      const songTitle = element.querySelector('.photo-caption').textContent;
+      const player = document.getElementById('musicPlayer');
+      const audio = document.getElementById('audioPlayer');
+      const titleElement = document.getElementById('currentSongTitle');
+
+      // If clicking the same song that's playing, just toggle play/pause
+      if (currentAudio === audioSrc && !audio.paused) {
+        togglePlayPause();
+        return;
+      }
+
+      // Remove playing class from previous frame
+      if (currentMusicFrame) {
+        currentMusicFrame.classList.remove('playing');
+      }
+
+      // Set new song
+      currentAudio = audioSrc;
+      currentMusicFrame = element;
+      audio.src = audioSrc;
+      titleElement.textContent = songTitle;
+      
+      // Show player and play
+      player.classList.add('active');
+      element.classList.add('playing');
+      audio.play();
+      updatePlayPauseIcon(false);
+    }
+
+    function togglePlayPause() {
+      const audio = document.getElementById('audioPlayer');
+      if (audio.paused) {
+        audio.play();
+        if (currentMusicFrame) currentMusicFrame.classList.add('playing');
+      } else {
+        audio.pause();
+        if (currentMusicFrame) currentMusicFrame.classList.remove('playing');
+      }
+      updatePlayPauseIcon(audio.paused);
+    }
+
+    function updatePlayPauseIcon(isPaused) {
+      const icon = document.querySelector('#playPauseBtn i');
+      if (isPaused) {
+        icon.className = 'fa-solid fa-play';
+      } else {
+        icon.className = 'fa-solid fa-pause';
+      }
+    }
+
+    function closeMusicPlayer() {
+      const player = document.getElementById('musicPlayer');
+      const audio = document.getElementById('audioPlayer');
+      audio.pause();
+      audio.currentTime = 0;
+      player.classList.remove('active');
+      if (currentMusicFrame) {
+        currentMusicFrame.classList.remove('playing');
+      }
+      currentAudio = null;
+    }
+
+    function seekMusic(event) {
+      const audio = document.getElementById('audioPlayer');
+      const progressBar = event.currentTarget;
+      const clickX = event.offsetX;
+      const width = progressBar.offsetWidth;
+      const duration = audio.duration;
+      audio.currentTime = (clickX / width) * duration;
+    }
+
+    function formatTime(seconds) {
+      const mins = Math.floor(seconds / 60);
+      const secs = Math.floor(seconds % 60);
+      return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+    }
+
+    // Update progress bar
+    document.getElementById('audioPlayer').addEventListener('timeupdate', function() {
+      const audio = this;
+      const progressBar = document.getElementById('progressBar');
+      const currentTimeElement = document.getElementById('currentTime');
+      
+      const progress = (audio.currentTime / audio.duration) * 100;
+      progressBar.style.width = progress + '%';
+      currentTimeElement.textContent = formatTime(audio.currentTime);
+    });
+
+    // Auto play next or loop
+    document.getElementById('audioPlayer').addEventListener('ended', function() {
+      if (currentMusicFrame) {
+        currentMusicFrame.classList.remove('playing');
+      }
+      updatePlayPauseIcon(true);
     });
   </script>
 
 </body>
 </html>
+
 
 
 
