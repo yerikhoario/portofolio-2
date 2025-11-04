@@ -647,6 +647,65 @@
       text-align: center;
     }
 
+    /* Game Frame Steam Overlay */
+    .game-frame {
+      cursor: pointer;
+      position: relative;
+    }
+
+    .steam-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 45px; /* Space for caption */
+      background: linear-gradient(135deg, rgba(23,26,33,0.95), rgba(27,40,56,0.95));
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      opacity: 0;
+      transition: all 0.3s ease;
+      pointer-events: none;
+      border-radius: 3px;
+    }
+
+    .game-frame:hover .steam-overlay {
+      opacity: 1;
+    }
+
+    .steam-overlay i {
+      font-size: 3rem;
+      color: #1b2838;
+      background: linear-gradient(135deg, #66c0f4, #1b2838);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: steamGlow 2s ease-in-out infinite;
+    }
+
+    @keyframes steamGlow {
+      0%, 100% { 
+        filter: drop-shadow(0 0 10px rgba(102,192,244,0.5));
+      }
+      50% { 
+        filter: drop-shadow(0 0 20px rgba(102,192,244,0.8));
+      }
+    }
+
+    .steam-overlay span {
+      color: #66c0f4;
+      font-size: 1rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .game-frame:hover {
+      transform: translateY(-10px) rotate(0deg);
+    }
+
     /* Navigation Arrows */
     .gallery-nav {
       position: absolute;
@@ -911,7 +970,7 @@
     <!-- Hobi 1: Dengar Lagu -->
     <div class="hobi-section">
       <h3><i class="fa-solid fa-music"></i> Dengar Lagu</h3>
-      <p class="hobi-desc">Lagu favorit yang menemani hari-hari saya</p>
+      <p class="hobi-desc">Playlist favorit yang menemani hari-hari saya</p>
       
       <div class="gallery-container">
         <button class="gallery-nav prev" onclick="scrollHobiSlider('music', -1)">
@@ -973,25 +1032,45 @@
         </button>
         
         <div class="gallery-slider" id="gameSlider">
-          <div class="photo-frame" onclick="openLightbox(this)">
+          <div class="photo-frame game-frame" data-steam-url="https://store.steampowered.com/app/1449690/The_Walking_Dead_The_Telltale_Definitive_Series/" onclick="openSteamGame(this, event)">
             <img src="game1.jpg" alt="Game 1">
-            <div class="photo-caption">Game 1</div>
+            <div class="photo-caption">The Walking Dead Telltale Definitive Series</div>
+            <div class="steam-overlay">
+              <i class="fa-brands fa-steam"></i>
+              <span>View on Steam</span>
+            </div>
           </div>
-          <div class="photo-frame" onclick="openLightbox(this)">
+          <div class="photo-frame game-frame" data-steam-url="https://store.steampowered.com/app/2507950/Delta_Force/" onclick="openSteamGame(this, event)">
             <img src="game2.jpg" alt="Game 2">
-            <div class="photo-caption">Game 2</div>
+            <div class="photo-caption">Delta Force</div>
+            <div class="steam-overlay">
+              <i class="fa-brands fa-steam"></i>
+              <span>View on Steam</span>
+            </div>
           </div>
-          <div class="photo-frame" onclick="openLightbox(this)">
+          <div class="photo-frame game-frame" data-steam-url="https://store.steampowered.com/app/22380/Fallout_New_Vegas/" onclick="openSteamGame(this, event)">
             <img src="game3.jpg" alt="Game 3">
-            <div class="photo-caption">Game 3</div>
+            <div class="photo-caption">Fallout New Vegas</div>
+            <div class="steam-overlay">
+              <i class="fa-brands fa-steam"></i>
+              <span>View on Steam</span>
+            </div>
           </div>
-          <div class="photo-frame" onclick="openLightbox(this)">
+          <div class="photo-frame game-frame" data-steam-url="https://store.steampowered.com/app/1466640/Road_96/" onclick="openSteamGame(this, event)">
             <img src="game4.jpg" alt="Game 4">
-            <div class="photo-caption">Game 4</div>
+            <div class="photo-caption">Road 96</div>
+            <div class="steam-overlay">
+              <i class="fa-brands fa-steam"></i>
+              <span>View on Steam</span>
+            </div>
           </div>
-          <div class="photo-frame" onclick="openLightbox(this)">
+          <div class="photo-frame game-frame" data-steam-url="https://store.steampowered.com/app/12210/Grand_Theft_Auto_IV_The_Complete_Edition/" onclick="openSteamGame(this, event)">
             <img src="game5.jpg" alt="Game 5">
-            <div class="photo-caption">Game 5</div>
+            <div class="photo-caption">GTA 4</div>
+            <div class="steam-overlay">
+              <i class="fa-brands fa-steam"></i>
+              <span>View on Steam</span>
+            </div>
           </div>
         </div>
         
@@ -1232,6 +1311,7 @@
           <!-- Copy paste struktur di atas, ganti src dan caption -->
           
         </div>
+        
         
         <button class="gallery-nav next" onclick="scrollGallery(1)">
           <i class="fa-solid fa-chevron-right"></i>
@@ -1672,10 +1752,20 @@
       }
       updatePlayPauseIcon(true);
     });
+
+    // ===== Steam Game Link Functions =====
+    function openSteamGame(element, event) {
+      event.stopPropagation(); // Prevent lightbox from opening
+      const steamUrl = element.getAttribute('data-steam-url');
+      if (steamUrl) {
+        window.open(steamUrl, '_blank');
+      }
+    }
   </script>
 
 </body>
 </html>
+
 
 
 
